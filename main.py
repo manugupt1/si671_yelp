@@ -2,8 +2,11 @@ __author__ = 'Manu'
 
 from collections import Counter
 from itertools import combinations
+import operator
 
 import simplejson as json
+
+from math import log
 
 ''' Changing filenames to variables"'''
 
@@ -26,11 +29,9 @@ with open(business,"r") as bizFile,open("categories","w") as output:
         output.write(str(categories)+"\n")
         x = combinations(categories, 2)
         for i in x:
-            temp = frozenset(i)
-            categoryRelationships.update((temp,))
-# for category in categories:
-#             categoryCount.update((category,))
-# #        break
+            categoryRelationships.update((i,))
+        for category in categories:
+            categoryCount.update((category,))
 
 
 # #Sort the counter, it is a list now instead of a counter
@@ -38,9 +39,30 @@ with open(business,"r") as bizFile,open("categories","w") as output:
 
 #
 # with open("categoryCountFile","w") as output:
-#     for item in categoryCount:
-#         val =  item[0] + "\t" + str(item[1]) + "\n"
+#     for key,value in categoryCount.items():
+#         val =  key + "\t" + str(value) + "\n"
 #         output.write (val)
+#
+# # Relationships between two categories
+# categoryRelationships = categoryRelationships.most_common()
+# with open("categoryRelationships", "w") as output:
+#     for item in categoryRelationships:
+#         val = str(item[0]) + "\t" + str(item[1]) + "\n"
+#         output.write(val)
+
+
+pmi = {}
+for key,value in categoryRelationships.items():
+    mult = float(categoryCount[key[0]]) * float(categoryCount[key[1]])
+    pmi[key] = log(value/mult)
+
+
+sorted_pmi = sorted(pmi.items(),key = operator.itemgetter(0,1))
+
+print (sorted_pmi)
+# for key,value in pmi.items():
+#     print (key,value)
+
 
 
 # Finding out the number of businesses in every cities
@@ -61,9 +83,3 @@ with open(business,"r") as bizFile,open("categories","w") as output:
 #
 
 
-# Relationships between two categories
-categoryRelationships = categoryRelationships.most_common()
-with open("categoryRelationships", "w") as output:
-    for item in categoryRelationships:
-        val = str(item[0]) + "\t" + str(item[1]) + "\n"
-        output.write(val)
