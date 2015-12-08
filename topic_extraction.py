@@ -39,48 +39,6 @@ def init():
     print df_biz_merged.columns
     df_biz_merged.to_pickle('df_biz_review.pkl')
 
-
-# # df_biz.to_pickle('business_dataframe.pkl')
-# # df_review.to_pickle('reviews_dataframe.pkl')
-
-# #Read data from pickle files
-#
-# # df_biz= pd.read_pickle('business_dataframe.pkl')
-# # df_review = pd.read_pickle('reviews_dataframe.pkl')
-#
-#
-# # In[7]:
-#
-# print df_biz.columns
-# df_review.columns
-#
-#
-# # In[2]:
-#
-#
-# df_biz_review= pd.read_pickle('df_biz_review.pkl')
-# print len(df_biz_review)
-#
-# # biz_categories = set(c for cat in df_biz_review["categories"] for c in cat)
-#
-#
-# # In[19]:
-#
-# # pd.unique(df_biz_review.categories.ravel())
-# biz_categories = set(c for cat in df_biz_review["categories"] for c in cat)
-# biz_categories
-#
-#
-# # In[3]:
-#
-#
-#
-# # In[35]:
-#
-# # i=df_biz_review["categories"].index
-# stoplist = set(stopwords.words("english"))
-#
-
 def lda_cal(category, numtopics):
     reviews=""
     corpus = []
